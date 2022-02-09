@@ -26,6 +26,10 @@ public class MatchFeature {
 
     @Given("score is {string} - love")
     public void score_is_love(String string) {
+        System.out.println(string);
+
+        if (!string.isEmpty())
+            player.setScore(string);
     }
 
     @When("Player {player} score")
