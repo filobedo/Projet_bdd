@@ -19,12 +19,12 @@ public class MatchFeature {
 
     @Given("Score is {string} - {string}")
     public void scoreBeforePoint(String str1, String str2) {
-        Assert.assertEquals(str1 + " - " + str2, game.getAnnouncement());
+        Assert.assertEquals(str1 + " - " + str2, game.getScoreAnnouncement());
     }
 
     @Given("Score is {string}")
     public void scoreIsDeuce(String str1) {
-        Assert.assertEquals(str1, game.getAnnouncement());
+        Assert.assertEquals(str1, game.getScoreAnnouncement());
     }
 
     @When("Player {string} score")
@@ -34,16 +34,16 @@ public class MatchFeature {
 
     @Then("The score is {string} - {string}")
     public void scoreAfterPoint(String str1, String str2) {
-        Assert.assertEquals(str1 + " - " + str2, game.getAnnouncement());
+        Assert.assertEquals(str1 + " - " + str2, game.getScoreAnnouncement());
     }
 
     @Then("The score is {string}")
     public void scoreShouldBeDeuce(String str1) {
-        Assert.assertEquals(str1, game.getAnnouncement());
+        Assert.assertEquals(str1, game.getScoreAnnouncement());
     }
 
     @Then("Player {string} win the point and win the game")
     public void playerWin(String str1) {
-        Assert.assertEquals("Player " + str1 + " win the game", game.getAnnouncement());
+        Assert.assertEquals("Player " + str1 + " win the game", game.getScoreAnnouncement());
     }
 }
