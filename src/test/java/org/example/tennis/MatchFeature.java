@@ -1,45 +1,49 @@
 package org.example.tennis;
 
-import io.cucumber.java.ParameterType;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.example.Player;
+import org.example.Game;
 import org.junit.Assert;
 
 public class MatchFeature {
 
-    private Player player;
+    private static final String[] players = {"one", "two"};
+    private static Game game;
 
-    @ParameterType(".*")
-    public Player player (String playerName) {
-
-        if (player == null) {
-            player = new Player();
-        }
-        return player;
+    @BeforeAll
+    public static void init() {
+        game = new Game(players);
     }
 
-    @Given("score is love - love")
-    public void score_is_love_love() {
+    @Given("Score is {string} - {string}")
+    public void beforeScore(String str1, String str2) {
+        Assert.assertEquals(str1 + " - " + str2, game.getAnnouncement());
     }
 
-    @Given("score is {string} - love")
-    public void score_is_love(String string) {
-        System.out.println(string);
-
-        if (!string.isEmpty())
-            player.setScore(string);
+    @Given("Score is {string}")
+    public void scoreIsDeuce(String str1) {
+        Assert.assertEquals(str1, game.getAnnouncement());
     }
 
-    @When("Player {player} score")
-    public void player_one_score(Player player) {
-        player.incrementScore();
-        System.out.println(player);
+    @When("Player {string} score")
+    public void playerScore(String player) {
+        game.playerScore(game.getPlayer(player));
     }
 
-    @Then("The score is new {string} - love")
-    public void the_score_is_new_love(String str1) {
-        Assert.assertEquals(str1, player.getScore());
+    @Then("The score is {string} - {string}")
+    public void afterScore(String str1, String str2) {
+        Assert.assertEquals(str1 + " - " + str2, game.getAnnouncement());
+    }
+
+    @Then("The score is {string}")
+    public void theScoreShouldBeDeuce(String str1) {
+        Assert.assertEquals(str1, game.getAnnouncement());
+    }
+
+    @Then("Player {string} win the point and win the game")
+    public void playerWinThePointAndWinTheGame(String str1) {
+        Assert.assertEquals("Player " + str1 + " win the game", game.getAnnouncement());
     }
 }
